@@ -5,6 +5,14 @@
 BitVector::BitVector() : std::vector<bool>() {}
 BitVector::BitVector(size_t n) : std::vector<bool>(n, false) {}
 
+BitVector::BitVector(std::string carac){
+  
+  this->reserve(carac.size()); // reserve space for performance
+  for(auto a : carac) {
+    this->push_back(a == '1');
+  }
+}
+
 BitVector &BitVector::operator+=(const BitVector &other) {
   this->insert(this->end(), other.begin(), other.end());
   return *this;

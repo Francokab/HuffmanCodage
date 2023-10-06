@@ -8,6 +8,7 @@ class BitVector : public std::vector<bool> {
 public:
   BitVector();              // default constructor
   BitVector(std::size_t n); // create a n size vector with 0
+  BitVector(std::string carac); //create a vector with a string
 
   /*   bool operator==(const BitVector &rhs) const; // check if all element are
     equal bool operator!=(const BitVector &rhs) const; // inverse of == bool
