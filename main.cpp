@@ -53,12 +53,10 @@ tree
   return bitv_comp;
 }*/
 
-
-
 int main() {
 
   /* // Tree Test
-   Btree tree;
+  Btree tree;
 
   // Inserting some values
   BitVector bitv1 = BitVector("1010");
@@ -87,7 +85,7 @@ int main() {
 
   node *result = tree.search(bitv1, 29);
   cout << result; */
-
+  
   // Main Test
   BitVector bitData = read_file_bit("text_tres_court.txt");
   vector<char> byteData = read_file_bin("text_tres_court.txt", false);

@@ -160,7 +160,14 @@ Btree dict_to_tree(map<BitVector, int> dict) {
     j = j + 1;
   }
 
-  
-  
+  vector<Btree *> BtreeList;
+  for (BitVector v : sortedList) {
+    BtreeList.push_back(new Btree(v, dict[v]));
+  }
+
+  for (Btree *t : BtreeList) {
+    t->printing();
+  }
+
   return outTree;
 }

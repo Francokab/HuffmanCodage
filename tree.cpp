@@ -30,7 +30,6 @@ void Btree::destroy_tree(node *leaf) {
 void Btree::insert(BitVector bitv, int freq) {
   // If the tree is empty
   if (root == nullptr) {
-    std::cout << "test3 \n";
     root = new node{freq, bitv, nullptr, nullptr};
   } else {
     insert(bitv, freq, root);
