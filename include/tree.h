@@ -23,8 +23,6 @@ public:
   void destroy_tree();
   int getRootFreq();
 
-private:
-
   int freq;
   BitVector bitv;
   Btree *left;  // Reference to left child

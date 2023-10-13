@@ -19,3 +19,4 @@ vector<char> bit_to_char(const BitVector vec);
 string bit_to_string(const BitVector vec);
 void printVector(const vector<BitVector> vec);
 Btree dict_to_tree(map<BitVector, int> dict);
+BitVector compress_symbol(BitVector bitv, Btree btree);

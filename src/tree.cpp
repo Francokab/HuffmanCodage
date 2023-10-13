@@ -63,25 +63,18 @@ int Btree::getRootFreq() { return freq; }
 
 // Public search function
 Btree *Btree::search(BitVector _bitv) {
-  Btree* output;
+  Btree* output = new Btree();
   if (bitv == _bitv) {
     return this;
   }
   if (left != nullptr) {
     output = left->search(bitv);
-    if (output != nullptr) { 
-      return output;
-      }
   }
   else if (right != nullptr) {
     output = right->search(bitv);
-    if (output != nullptr) { 
-      return output;
-      }
   }
-  else {
-    return nullptr;
-  }
+
+  return output;
 }
 
 

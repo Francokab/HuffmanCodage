@@ -3,6 +3,7 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <queue>
 
 #include "bitvector.h"
 #include "tree.h"
@@ -171,36 +172,20 @@ Btree dict_to_tree(map<BitVector, int> dict) {
   return outTree;
 }
 
-/*
 BitVector compress_symbol(BitVector bitv, Btree btree){
 
-  if (bitv == nullptr) {
-    cout << "Tree is empty." << endl;
-    return;
-  }
+  Btree *tree = btree.search(bitv);
 
-  std::queue<node *> q;
-  q.push(bitv);
-
-  while (!q.empty()) {
-    int levelNodeCount = q.size(); // Number of nodes at the current level
-
-    while (levelNodeCount > 0) {
-      node *current = q.front();
-      q.pop();
-
-      if (current->left != nullptr) {
-        q.push(current->left);
-      }
-      if (current->right != nullptr) {
-        q.push(current->right);
-      }
-
-      levelNodeCount--;
+  string string_comp = "0";
+  while(tree->parent != nullptr){
+    if(tree->parent->left == tree){
+      string_comp.push_back('0');
+    } else if(tree->parent->right == tree) {
+      string_comp.push_back('1');
     }
-    cout << endl; // Move to the next line for the next level of the
-tree
   }
+
+  BitVector bitv_comp = BitVector(string_comp);
 
   return bitv_comp;
-}*/
+}
