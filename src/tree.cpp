@@ -38,10 +38,12 @@ void Btree::insert(BitVector _bitv, int _freq) {
   if (left == nullptr) {
     Btree temp = Btree(_bitv,_freq);
     left = &temp;
+    temp.parent = this;
   }
   else if (right == nullptr) {
     Btree temp = Btree(_bitv,_freq);
     right = &temp;
+    temp.parent = this;
   } else {
     left->insert(_bitv,_freq);
   }
@@ -50,9 +52,11 @@ void Btree::insert(BitVector _bitv, int _freq) {
 void Btree::insert(Btree *leaf) {
   if (left == nullptr) {
     left = leaf;
+    leaf->parent = this;
   }
   else if (right == nullptr) {
     left = leaf;
+    leaf->parent = this;
   } else {
     left->insert(leaf);
   }
@@ -82,6 +86,7 @@ Btree *Btree::search(BitVector _bitv) {
   else {
     return nullptr;
   }
+  return nullptr
 }
 
 
