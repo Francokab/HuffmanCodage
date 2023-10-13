@@ -56,6 +56,8 @@ int main() {
   vector<char> byteData = read_file_bin("text/text_tres_court.txt", false);
   BitVector bitData = read_file_bit("text/text_tres_court.txt");
 
+  //Francois je te vois.
+
   // cout << bitData << "\n";
   // cout << bit_to_string(bitData) << "\n";
 
