@@ -4,93 +4,99 @@
 #include <iostream>
 #include <queue>
 
-Btree::Btree() { root = nullptr; }
+Btree::Btree() { 
+  freq = 0;
+  bitv = BitVector();
+  left = nullptr;
+  right = nullptr;
+  parent = nullptr;
+ }
 
 // Destructor
 Btree::~Btree() { destroy_tree(); }
 
-Btree::Btree(BitVector bitv, int freq) {
-  root = nullptr;
-  this->insert(bitv, freq);
+Btree::Btree(BitVector _bitv, int _freq) {
+  freq = _freq;
+  bitv = _bitv;
+  left = nullptr;
+  right = nullptr;
+  parent = nullptr;
 }
 
 // Public function to destroy the entire tree
-void Btree::destroy_tree() { destroy_tree(root); }
-
-// Private recursive function to destroy the tree from a given node downwards
-void Btree::destroy_tree(node *leaf) {
-  if (leaf != nullptr) {
-    destroy_tree(leaf->left);
-    destroy_tree(leaf->right);
-    delete leaf;
+void Btree::destroy_tree() {
+  if (left != nullptr) {
+    left->destroy_tree();
+  }
+  if (right != nullptr) {
+    right->destroy_tree();
   }
 }
 
 // Public insert function
-void Btree::insert(BitVector bitv, int freq) {
-  // If the tree is empty
-  if (root == nullptr) {
-    root = new node{freq, bitv, nullptr, nullptr};
+void Btree::insert(BitVector _bitv, int _freq) {
+  if (left == nullptr) {
+    left = &Btree(_bitv,_freq);
+  }
+  else if (right == nullptr) {
+    right = &Btree(_bitv,_freq);
   } else {
-    insert(bitv, freq, root);
+    left->insert(_bitv,_freq);
   }
 }
 
-void Btree::insert(BitVector bitv, int freq, node *leaf) {
-  if (freq < leaf->freq) {
-    if (leaf->left != nullptr) {
-      insert(bitv, freq, leaf->left);
-    } else {
-      leaf->left = new node{freq, bitv, nullptr, nullptr};
-    }
-  } else if (freq > leaf->freq) {
-    if (leaf->right != nullptr) {
-      insert(bitv, freq, leaf->right);
-    } else {
-      leaf->right = new node{freq, bitv, nullptr, nullptr};
-    }
+void Btree::insert(Btree *leaf) {
+  if (left == nullptr) {
+    left = leaf;
+  }
+  else if (right == nullptr) {
+    left = leaf;
+  } else {
+    left->insert(leaf);
   }
 }
 
 // return the freq of root
-int Btree::getRootFreq() { return root->freq; }
+int Btree::getRootFreq() { return freq; }
 
 // Public search function
-node *Btree::search(BitVector bitv, int freq) {
-  return search(bitv, freq, root);
+Btree *Btree::search(BitVector _bitv) {
+  Btree* output;
+  if (bitv == _bitv) {
+    return this;
+  }
+  if (left != nullptr) {
+    output = left->search(bitv);
+    if (output != nullptr) { 
+      return output;
+      }
+  }
+  else if (right != nullptr) {
+    output = right->search(bitv);
+    if (output != nullptr) { 
+      return output;
+      }
+  }
+  else {
+    return nullptr;
+  }
 }
 
-// Private recursive helper function for search
-node *Btree::search(BitVector bitv, int freq, node *leaf) {
-  // Base cases
-  if (leaf == nullptr) {
-    return nullptr; // Key not found in the tree
-  } else if (bitv == leaf->bitv) {
-    return leaf; // Key found, return the node
-  }
-
-  // Recursive cases
-  if (bitv < leaf->bitv) {
-    return search(bitv, freq, leaf->left); // Search left subtree
-  } else {
-    return search(bitv, freq, leaf->right); // Search right subtree
-  }
-}
 
 void Btree::printing() {
-  if (root == nullptr) {
+  if (left == nullptr and right == nullptr and bitv == BitVector()) {
     std::cout << "Tree is empty." << std::endl;
     return;
   }
 
-  std::queue<node *> q;
-  q.push(root);
+  std::queue<Btree *> q;
+  q.push(this);
 
   while (!q.empty()) {
     int levelNodeCount = q.size(); // Number of nodes at the current level
 
     while (levelNodeCount > 0) {
-      node *current = q.front();
+      Btree *current = q.front();
       std::cout << current->freq << " ";
       std::cout << current->bitv << " ";
       q.pop();

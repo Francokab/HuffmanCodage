@@ -17,17 +17,19 @@ public:
   Btree(BitVector bitv, int freq);
 
   void insert(BitVector bitv, int freq);
+  void insert(Btree *leaf);
   void printing();
-  node *search(BitVector bitv, int freq);
+  Btree *search(BitVector bitv);
   void destroy_tree();
   int getRootFreq();
 
 private:
-  void destroy_tree(node *leaf);
-  void insert(BitVector bitv, int freq, node *leaf);
-  node *search(BitVector bitv, int freq, node *leaf);
 
-  node *root;
+  int freq;
+  BitVector bitv;
+  Btree *left;  // Reference to left child
+  Btree *right; // Reference to right child
+  Btree *parent; //Reference to parent
 };
 
 #endif // TREE_H
