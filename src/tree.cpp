@@ -36,10 +36,12 @@ void Btree::destroy_tree() {
 // Public insert function
 void Btree::insert(BitVector _bitv, int _freq) {
   if (left == nullptr) {
-    left = &Btree(_bitv,_freq);
+    Btree temp = Btree(_bitv,_freq);
+    left = &temp;
   }
   else if (right == nullptr) {
-    right = &Btree(_bitv,_freq);
+    Btree temp = Btree(_bitv,_freq);
+    right = &temp;
   } else {
     left->insert(_bitv,_freq);
   }
