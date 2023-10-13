@@ -12,9 +12,6 @@ Btree::Btree() {
   parent = nullptr;
  }
 
-// Destructor
-Btree::~Btree() { destroy_tree(); }
-
 Btree::Btree(BitVector _bitv, int _freq) {
   freq = _freq;
   bitv = _bitv;
@@ -23,15 +20,15 @@ Btree::Btree(BitVector _bitv, int _freq) {
   parent = nullptr;
 }
 
-// Public function to destroy the entire tree
-void Btree::destroy_tree() {
-  if (left != nullptr) {
-    left->destroy_tree();
-  }
-  if (right != nullptr) {
-    right->destroy_tree();
-  }
-}
+// // Public function to destroy the entire tree
+// void Btree::destroy_tree() {
+//   if (left != nullptr) {
+//     left->destroy_tree();
+//   }
+//   if (right != nullptr) {
+//     right->destroy_tree();
+//   }
+// }
 
 // Public insert function
 void Btree::insert(BitVector _bitv, int _freq) {
@@ -55,7 +52,7 @@ void Btree::insert(Btree *leaf) {
     leaf->parent = this;
   }
   else if (right == nullptr) {
-    left = leaf;
+    right = leaf;
     leaf->parent = this;
   } else {
     left->insert(leaf);
@@ -86,7 +83,7 @@ Btree *Btree::search(BitVector _bitv) {
   else {
     return nullptr;
   }
-  return nullptr
+  return nullptr;
 }
 
 
@@ -120,4 +117,38 @@ void Btree::printing() {
     std::cout
         << std::endl; // Move to the next line for the next level of the tree
   }
+}
+
+void treeTest() {
+  // à mettre à jour
+  /* // Tree Test
+  Btree tree;
+
+  // Inserting some values
+  BitVector bitv1 = BitVector("1010");
+  BitVector bitv2 = BitVector("1110");
+  BitVector bitv3 = BitVector("1000");
+  BitVector bitv4 = BitVector("1011");
+  BitVector bitv5 = BitVector("1111");
+  BitVector bitv6 = BitVector("0000");
+  BitVector bitv7 = BitVector("0110");
+  BitVector bitv8 = BitVector(10);
+
+  cout << bitv8 << endl;
+  cout << bitv7 << endl;
+
+  tree.insert(bitv1, 5);
+  tree.insert(bitv2, 3);
+  tree.insert(bitv3, 7);
+  tree.insert(bitv4, 2);
+  tree.insert(bitv5, 4);
+  tree.insert(bitv6, 6);
+  tree.insert(bitv7, 8);
+
+  // Printing the tree
+  cout << "Tree structure:" << endl;
+  tree.printing();
+
+  node *result = tree.search(bitv1, 29);
+  cout << result; */
 }

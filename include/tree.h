@@ -13,17 +13,14 @@ struct node {
 class Btree {
 public:
   Btree();
-  ~Btree();
   Btree(BitVector bitv, int freq);
 
   void insert(BitVector bitv, int freq);
   void insert(Btree *leaf);
   void printing();
   Btree *search(BitVector bitv);
-  void destroy_tree();
+  //void destroy_tree();
   int getRootFreq();
-
-private:
 
   int freq;
   BitVector bitv;
@@ -31,5 +28,7 @@ private:
   Btree *right; // Reference to right child
   Btree *parent; //Reference to parent
 };
+
+void treeTest();
 
 #endif // TREE_H
