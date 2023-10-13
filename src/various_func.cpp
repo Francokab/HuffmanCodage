@@ -241,9 +241,8 @@ tree
   return bitv_comp;
 }*/
 
-void mainTest() {
+void mainTest(string path) {
   // Main Test
-  string path = "text/text.txt";
   vector<char> byteData = read_file_bin(path, false);
   BitVector bitData = read_file_bit(path);
 

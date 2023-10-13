@@ -20,8 +20,9 @@ using namespace std;
 int main() {
 
   //treeTest();
-  
-  mainTest();
+
+  string path = "text/text_court.txt";
+  mainTest(path);
 
   // BitVectorTest();
   return 0;
