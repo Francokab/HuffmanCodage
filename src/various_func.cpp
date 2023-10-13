@@ -169,11 +169,10 @@ Btree *dict_to_tree(map<BitVector, int> dict) {
   // }
   int ite = 0;
   bool condWhile = true;
-  int ite_limit = 0;
   Btree *first;
   Btree *second;
   Btree *parent;
-  while (BtreeList.size()>1 and ite_limit <20) {
+  while (BtreeList.size()>1) {
     // cout << endl << "size is " << BtreeList.size() << endl;
     // for (Btree *t : BtreeList) {
     //   cout << "tree ";
@@ -201,7 +200,6 @@ Btree *dict_to_tree(map<BitVector, int> dict) {
         condWhile = BtreeList[ite - 1]->freq > parent->freq;
       } else {condWhile = false;}
     }
-    ite_limit++;
   }
   // cout << "Here is the tree" << endl;
   // BtreeList[0]->printing();
@@ -245,8 +243,9 @@ tree
 
 void mainTest() {
   // Main Test
-  vector<char> byteData = read_file_bin("text/text_tres_court.txt", false);
-  BitVector bitData = read_file_bit("text/text_tres_court.txt");
+  string path = "text/text.txt";
+  vector<char> byteData = read_file_bin(path, false);
+  BitVector bitData = read_file_bit(path);
 
   // cout << bitData << "\n";
   // cout << bit_to_string(bitData) << "\n";
