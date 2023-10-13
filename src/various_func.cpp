@@ -10,22 +10,23 @@
 using namespace std;
 
 BitVector read_file_bit(const string &path) {
+  BitVector bitData;
   ifstream file(path, ios::binary | ios::ate);
   streamsize size = file.tellg();
   file.seekg(0, ios::beg);
-
-  vector<char> byteData(size);
-  BitVector bitData;
-  if (file.read(byteData.data(), size)) {
-    // byteData now contains the file's contents as bytes
-    for (char i : byteData) {
-      bitset<8> octet = bitset<8>(i);
-      for (int j = 0; j < 8; j++) {
-        bitData.push_back(bool(octet[j]));
+  if (size > 0) {
+    vector<char> byteData(size);
+    
+    if (file.read(byteData.data(), size)) {
+      // byteData now contains the file's contents as bytes
+      for (char i : byteData) {
+        bitset<8> octet = bitset<8>(i);
+        for (int j = 0; j < 8; j++) {
+          bitData.push_back(bool(octet[j]));
+        }
       }
     }
   }
-
   return bitData;
 }
 
@@ -33,14 +34,15 @@ vector<char> read_file_bin(const string &path, bool afficher) {
   ifstream file(path, ios::binary | ios::ate);
   streamsize size = file.tellg();
   file.seekg(0, ios::beg);
-
-  vector<char> byteData(size);
-  if (file.read(byteData.data(), size) && afficher == true) {
-    // byteData now contains the file's contents as bytes
-    for (char i : byteData)
-      cout << bitset<8>(i) << " ";
+  vector<char> byteData;
+  if (size > 0) {
+    byteData.resize(size);
+    if (file.read(byteData.data(), size) && afficher == true) {
+      // byteData now contains the file's contents as bytes
+      for (char i : byteData)
+        cout << bitset<8>(i) << " ";
+    }
   }
-
   return byteData;
 }
 
@@ -66,9 +68,6 @@ map<BitVector, int> count_frequency_bit(BitVector bitData, int n) {
       v = bitData.sliceSE(i, i + n);
     } else {
       v = bitData.sliceS(i) + BitVector(i + n - bitData.size());
-    }
-    for (int j = 0; j < n; j++) {
-      bitData[j];
     }
     if (dict.count(v)) {
       dict[v]++;
@@ -103,7 +102,7 @@ void read_dict(map<BitVector, int> dict) {
 vector<char> bit_to_char(const BitVector vec) {
   size_t size = vec.size();
   vector<char> output;
-  for (int i = 0; i + 8 <= size; i = i + 8) {
+  for (size_t i = 0; i + 8 <= size; i = i + 8) {
     BitVector bitvec = vec.sliceSE(i, i + 8);
     char c = 0;
     for (int j = 0; j < 8; j++) {
@@ -117,7 +116,7 @@ vector<char> bit_to_char(const BitVector vec) {
 string bit_to_string(const BitVector vec) {
   size_t size = vec.size();
   string output;
-  for (int i = 0; i + 8 <= size; i = i + 8) {
+  for (size_t i = 0; i + 8 <= size; i = i + 8) {
     BitVector bitvec = vec.sliceSE(i, i + 8);
     char c = 0;
     for (int j = 0; j < 8; j++) {
@@ -146,13 +145,13 @@ Btree dict_to_tree(map<BitVector, int> dict) {
     sortedList.push_back((*it).first);
   }
   // insertion sort copy pasted from wikipedia
-  int j = 1;
-  int k = 1;
+  size_t j = 1;
+  long long int k = 1;
   BitVector temp;
   while (j < sortedList.size()) {
     temp = sortedList[j];
     k = j - 1;
-    while (k >= 0 and dict[sortedList[k]] > dict[temp]) {
+    while (k >= 0 && dict[sortedList[k]] > dict[temp]) {
       sortedList[k + 1] = sortedList[k];
       k = k - 1;
     }
@@ -171,3 +170,37 @@ Btree dict_to_tree(map<BitVector, int> dict) {
 
   return outTree;
 }
+
+/*
+BitVector compress_symbol(BitVector bitv, Btree btree){
+
+  if (bitv == nullptr) {
+    cout << "Tree is empty." << endl;
+    return;
+  }
+
+  std::queue<node *> q;
+  q.push(bitv);
+
+  while (!q.empty()) {
+    int levelNodeCount = q.size(); // Number of nodes at the current level
+
+    while (levelNodeCount > 0) {
+      node *current = q.front();
+      q.pop();
+
+      if (current->left != nullptr) {
+        q.push(current->left);
+      }
+      if (current->right != nullptr) {
+        q.push(current->right);
+      }
+
+      levelNodeCount--;
+    }
+    cout << endl; // Move to the next line for the next level of the
+tree
+  }
+
+  return bitv_comp;
+}*/

@@ -19,40 +19,6 @@ using namespace std;
 //  - méthode adaptatif
 //  - (Bonus) count_frequency_dinamique (variable size keys)
 
-/*
-BitVector compress_symbol(BitVector bitv, Btree btree){
-
-  if (bitv == nullptr) {
-    cout << "Tree is empty." << endl;
-    return;
-  }
-
-  std::queue<node *> q;
-  q.push(bitv);
-
-  while (!q.empty()) {
-    int levelNodeCount = q.size(); // Number of nodes at the current level
-
-    while (levelNodeCount > 0) {
-      node *current = q.front();
-      q.pop();
-
-      if (current->left != nullptr) {
-        q.push(current->left);
-      }
-      if (current->right != nullptr) {
-        q.push(current->right);
-      }
-
-      levelNodeCount--;
-    }
-    cout << endl; // Move to the next line for the next level of the
-tree
-  }
-
-  return bitv_comp;
-}*/
-
 int main() {
 
   /* // Tree Test
@@ -87,8 +53,8 @@ int main() {
   cout << result; */
   
   // Main Test
-  BitVector bitData = read_file_bit("text_tres_court.txt");
-  vector<char> byteData = read_file_bin("text_tres_court.txt", false);
+  vector<char> byteData = read_file_bin("text/text_tres_court.txt", false);
+  BitVector bitData = read_file_bit("text/text_tres_court.txt");
 
   // cout << bitData << "\n";
   // cout << bit_to_string(bitData) << "\n";
