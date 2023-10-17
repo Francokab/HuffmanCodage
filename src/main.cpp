@@ -92,6 +92,8 @@ int main() {
 
   BitVector bitc = compress_symbol(bitv6, tree1);
 
+  tree1.printing();
+
   cout << "Le vecteur compresse est : " << bitc << endl;
 
   return 0;
