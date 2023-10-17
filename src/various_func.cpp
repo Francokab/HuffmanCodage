@@ -136,8 +136,8 @@ void printVector(const vector<BitVector> vec) {
   cout << "] \n";
 }
 
-Btree dict_to_tree(map<BitVector, int> dict) {
-  Btree outTree = Btree();
+Btree *dict_to_tree(map<BitVector, int> dict) {
+  Btree *outTree;
   // first we need to sort the dict so we have a list of value with increasing
   // frequency
   vector<BitVector> sortedList;
@@ -165,10 +165,46 @@ Btree dict_to_tree(map<BitVector, int> dict) {
     BtreeList.push_back(new Btree(v, dict[v]));
   }
 
-  for (Btree *t : BtreeList) {
-    t->printing();
-  }
+  // for (Btree *t : BtreeList) {
+  //   t->printing();
+  // }
+  int ite = 0;
+  bool condWhile = true;
+  Btree *first;
+  Btree *second;
+  Btree *parent;
+  while (BtreeList.size()>1) {
+    // cout << endl << "size is " << BtreeList.size() << endl;
+    // for (Btree *t : BtreeList) {
+    //   cout << "tree ";
+    //   t->printing();
+    // }
+    first = BtreeList[0];
+    BtreeList.erase(BtreeList.begin());
+    second = BtreeList[0];
+    BtreeList.erase(BtreeList.begin());
 
+    parent = new Btree();
+    parent->insert(first);
+    parent->insert(second);
+    parent->freq = first->freq + second->freq;
+    BtreeList.push_back(parent);
+    ite = BtreeList.size() - 1;
+    if (ite > 0) {
+      condWhile = BtreeList[ite - 1]->freq > parent->freq;
+    } else {condWhile = false;}
+    while (condWhile) {
+      BtreeList[ite] = BtreeList[ite - 1];
+      BtreeList[ite - 1] = parent;
+      ite = ite - 1;
+      if (ite > 0) {
+        condWhile = BtreeList[ite - 1]->freq > parent->freq;
+      } else {condWhile = false;}
+    }
+  }
+  // cout << "Here is the tree" << endl;
+  // BtreeList[0]->printing();
+  outTree = BtreeList[0];
   return outTree;
 }
 
@@ -189,3 +225,24 @@ BitVector compress_symbol(BitVector bitv, Btree btree){
 
   return bitv_comp;
 }
+
+void mainTest(string path) {
+  // Main Test
+  vector<char> byteData = read_file_bin(path, false);
+  BitVector bitData = read_file_bit(path);
+
+  // cout << bitData << "\n";
+  // cout << bit_to_string(bitData) << "\n";
+
+  map<char, int> dict_char = count_frequency_char(byteData);
+  map<BitVector, int> dict_bit = count_frequency_bit(bitData, 8);
+
+  read_dict(dict_char);
+  read_dict(dict_bit);
+
+  Btree tree = *dict_to_tree(dict_bit);
+
+  cout << "Here is the tree" << endl;
+  tree.printing();
+}
+

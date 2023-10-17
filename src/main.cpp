@@ -11,8 +11,6 @@
 using namespace std;
 
 // TODO
-//  - Création d'une classe tree good
-//  - fonction dict => tree
 //  - fonction tree + bitvector => bitvector compressé
 //  - fonction tree + texte => texte compressé
 //  - fonction tree + texte compressé => texte
