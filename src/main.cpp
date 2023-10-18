@@ -14,7 +14,7 @@ using namespace std;
 //  - fonction tree + bitvector => bitvector compressé
 //  - tester fonction tree + texte => texte compressé
 //  - fonction tree + texte compressé => texte
-//  - méthode adaptatif
+//  - (Bonus) méthode adaptatif
 //  - (Bonus) count_frequency_dinamique (variable size keys)
 
 int main() {
