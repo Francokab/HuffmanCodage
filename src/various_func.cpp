@@ -248,3 +248,24 @@ BitVector compress_text_static(BitVector fulltextBitv, Btree btree) {
 
   return outbitv;
 }
+
+BitVector decompress_text_static(BitVector textCompressBitv, Btree btree) {
+  Btree tree = btree;
+  BitVector outbitv = BitVector();
+  
+  for (bool bit: textCompressBitv) {
+    if (bit) {
+      tree = *tree.right;
+    }
+    else {
+      tree = *tree.left;
+    }
+    if (tree.bitv != BitVector()) {
+      outbitv += tree.bitv;
+      tree = btree;
+    }
+  }
+
+  return outbitv;
+}
+
