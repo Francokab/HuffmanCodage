@@ -230,8 +230,9 @@ BitVector compress_text_static(BitVector fulltextBitv, Btree btree) {
   int ntrame = 0;
   Btree tree = btree;
   BitVector outbitv = BitVector();
+  // search the size of bitvector inside the tree
   while (tree.left != nullptr) {
-    tree = *btree.left;
+    tree = *tree.left;
   }
   ntrame = tree.bitv.size();
   BitVector currentBitv = BitVector();
@@ -266,6 +267,12 @@ void mainTest(string path) {
 
   cout << "Here is the tree" << endl;
   tree.printing();
+
+  BitVector bitDataCompress = compress_text_static(bitData,tree);
+
+  cout << "bitData has size " << bitData.size() << endl;
+  cout << "bitDataCompress has size " << bitDataCompress.size() << endl;
+  cout << bit_to_string(bitDataCompress) << endl;
 }
 
 void compressbit_test(){
