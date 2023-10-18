@@ -33,7 +33,6 @@ void mainTest(string path) {
 
   cout << "bitData has size " << bitData.size() << endl;
   cout << "bitDataCompress has size " << bitDataCompress.size() << endl;
-  cout << bit_to_string(bitDataCompress) << endl;
 }
 
 void compressbit_test(){
