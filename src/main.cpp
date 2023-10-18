@@ -7,6 +7,7 @@
 #include "bitvector.h"
 #include "tree.h"
 #include "various_func.h"
+#include "test.h"
 
 using namespace std;
 
