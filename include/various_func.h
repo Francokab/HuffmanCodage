@@ -21,3 +21,4 @@ void printVector(const vector<BitVector> vec);
 Btree *dict_to_tree(map<BitVector, int> dict);
 BitVector compress_symbol(BitVector bitv, Btree btree);
 void mainTest(string path);
+void compressbit_test();

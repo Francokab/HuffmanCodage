@@ -170,6 +170,7 @@ bool BitVector::any() const {
   return false;
 }
 
+
 bool BitVector::none() const { return ~this->any(); }
 
 BitVector operator+(const BitVector &bvl, const BitVector &bvr) {

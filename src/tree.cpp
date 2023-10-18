@@ -68,15 +68,24 @@ Btree *Btree::search(BitVector _bitv) {
   if (bitv == _bitv) {
     return this;
   }
+
   if (left != nullptr) {
-    output = left->search(bitv);
-  }
-  else if (right != nullptr) {
-    output = right->search(bitv);
+    output = left->search(_bitv);
+    if (output != nullptr) { 
+      return output;
+      }
   }
 
-  return output;
+  if (right != nullptr) {
+    output = right->search(_bitv);
+    if (output != nullptr) { 
+      return output;
+      }
+  }
+
+  return nullptr;
 }
+
 
 
 void Btree::printing() {
