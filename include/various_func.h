@@ -23,3 +23,4 @@ BitVector compress_symbol(BitVector bitv, Btree btree);
 void mainTest(string path);
 void compressbit_test();
 BitVector compress_text_static(BitVector bitv, Btree btree);
+BitVector decompress_text_static(BitVector bitv, Btree btree);
