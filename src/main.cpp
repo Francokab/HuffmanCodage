@@ -14,7 +14,7 @@ using namespace std;
 
 int main() {
 
-  mainTest("text/text_court.txt");
+  mainTest("text/text.txt");
 
   return 0;
 }
