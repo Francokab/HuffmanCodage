@@ -12,7 +12,7 @@ using namespace std;
 
 // TODO
 //  - fonction tree + bitvector => bitvector compressé
-//  - fonction tree + texte => texte compressé
+//  - tester fonction tree + texte => texte compressé
 //  - fonction tree + texte compressé => texte
 //  - méthode adaptatif
 //  - (Bonus) count_frequency_dinamique (variable size keys)

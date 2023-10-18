@@ -226,6 +226,28 @@ BitVector compress_symbol(BitVector bitv, Btree btree){
   return bitv_comp;
 }
 
+BitVector compress_text_static(BitVector fulltextBitv, Btree btree) {
+  int ntrame = 0;
+  Btree tree = btree;
+  BitVector outbitv = BitVector();
+  while (tree.left != nullptr) {
+    tree = *btree.left;
+  }
+  ntrame = tree.bitv.size();
+  BitVector currentBitv = BitVector();
+  
+  for (unsigned int i = 0; i < fulltextBitv.size(); i = i + ntrame) {
+    if (i + ntrame <= fulltextBitv.size()) {
+      currentBitv = fulltextBitv.sliceSE(i, i + ntrame);
+    } else {
+      currentBitv = fulltextBitv.sliceS(i) + BitVector(i + ntrame - fulltextBitv.size());
+    }
+    outbitv += compress_symbol(currentBitv,btree);
+  }
+
+  return outbitv;
+}
+
 void mainTest(string path) {
   // Main Test
   vector<char> byteData = read_file_bin(path, false);
