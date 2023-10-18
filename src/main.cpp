@@ -19,5 +19,7 @@ using namespace std;
 
 int main() {
 
+  compressbit_test();
+
   return 0;
 }

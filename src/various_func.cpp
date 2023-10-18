@@ -212,16 +212,16 @@ BitVector compress_symbol(BitVector bitv, Btree btree){
 
   Btree *tree = btree.search(bitv);
 
-  string string_comp = "0";
+  BitVector bitv_comp;
   while(tree->parent != nullptr){
-    if(tree->parent->left == tree){
-      string_comp.push_back('0');
-    } else if(tree->parent->right == tree) {
-      string_comp.push_back('1');
+    if((tree->parent)->left == tree){
+      bitv_comp.insert(bitv_comp.begin(), false);
+      
+    } else if((tree->parent)->right == tree) {
+      bitv_comp.insert(bitv_comp.begin(), true);
     }
+    tree = tree->parent;
   }
-
-  BitVector bitv_comp = BitVector(string_comp);
 
   return bitv_comp;
 }
@@ -266,5 +266,34 @@ void mainTest(string path) {
 
   cout << "Here is the tree" << endl;
   tree.printing();
+}
+
+void compressbit_test(){
+  BitVector bitv1 = BitVector("1010");
+  BitVector bitv2 = BitVector("1110");
+  BitVector bitv3 = BitVector("1000");
+  BitVector bitv4 = BitVector("1011");
+  BitVector bitv5 = BitVector("1111");
+  BitVector bitv6 = BitVector("0000");
+  BitVector bitv7 = BitVector("0110");
+
+  Btree tree1 = Btree(bitv1, 54);
+  Btree tree2 = Btree(bitv2, 41);
+  Btree tree3 = Btree(bitv3, 34);
+  Btree tree4 = Btree(bitv4, 31);
+  Btree tree5 = Btree(bitv5, 25);
+  Btree tree6 = Btree(bitv6, 17);
+  Btree tree7 = Btree(bitv7, 9);
+
+  tree1.insert(&tree2);
+  tree1.insert(&tree3);
+  tree2.insert(&tree4);
+  tree2.insert(&tree5);
+  tree3.insert(&tree6);
+  tree3.insert(&tree7);
+
+  BitVector bitc = compress_symbol(bitv6, tree1);
+
+  cout << "Le vecteur compresse est : " << bitc << endl;
 }
 
