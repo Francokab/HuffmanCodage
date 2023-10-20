@@ -28,11 +28,25 @@ void mainTest(string path) {
 
   cout << "Here is the tree" << endl;
   tree.printing();
+  //cout << "Here is the text" << endl;
+  //cout << bitData << endl;
 
   BitVector bitDataCompress = compress_text_static(bitData,tree);
 
+  cout << endl;
   cout << "bitData has size " << bitData.size() << endl;
   cout << "bitDataCompress has size " << bitDataCompress.size() << endl;
+  //cout << "Here is the compressed text" << endl;
+  //cout << bitDataCompress << endl;
+
+  cout << endl;
+  BitVector bitDataDecompress = decompress_text_static(bitDataCompress,tree);
+  cout << "bitDataDecompress has size " << bitDataDecompress.size() << endl;
+  //cout << "Here is the text decompressed" << endl;
+  //cout << bitDataDecompress << endl;
+  //cout << bit_to_string(bitDataDecompress) << endl;
+
+
 }
 
 void compressbit_test(){
