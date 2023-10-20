@@ -138,8 +138,7 @@ void printVector(const vector<BitVector> vec) {
 
 Btree *dict_to_tree(map<BitVector, int> dict) {
   Btree *outTree;
-  // first we need to sort the dict so we have a list of value with increasing
-  // frequency
+
   vector<BitVector> sortedList;
   map<BitVector, int>::iterator it;
   for (it = dict.begin(); it != dict.end(); it++) {
@@ -165,20 +164,13 @@ Btree *dict_to_tree(map<BitVector, int> dict) {
     BtreeList.push_back(new Btree(v, dict[v]));
   }
 
-  // for (Btree *t : BtreeList) {
-  //   t->printing();
-  // }
   int ite = 0;
   bool condWhile = true;
   Btree *first;
   Btree *second;
   Btree *parent;
   while (BtreeList.size()>1) {
-    // cout << endl << "size is " << BtreeList.size() << endl;
-    // for (Btree *t : BtreeList) {
-    //   cout << "tree ";
-    //   t->printing();
-    // }
+
     first = BtreeList[0];
     BtreeList.erase(BtreeList.begin());
     second = BtreeList[0];
