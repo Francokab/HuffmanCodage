@@ -77,3 +77,24 @@ void compressbit_test(){
 
   cout << "Le vecteur compresse est : " << bitc << endl;
 }
+
+void entropie_test() {
+  BitVector bitData = read_file_bit("text/text.txt"); //O(n)
+  cout << "size : "<< bitData.size() << endl;
+  Btree tree;
+  BitVector tree_store;
+  double entropie;
+
+  for (int i = 1; i<70; i = i*2) {
+    map<BitVector, int> dict_bit = count_frequency_bit(bitData, i); //O(n)
+    map<BitVector, double> entropie_dict = dict_to_entropie(dict_bit);
+
+    tree = *dict_to_tree(dict_bit); //O(c.log(c))
+    tree_store = calculate_tree_storage(tree);
+    entropie = calculate_entropie(bitData,dict_bit,i);
+
+    cout << "entropie (n = "<< i <<") : " << entropie;
+    cout << "\ttree size : " << tree_store.size();
+    cout << "\ttotal : " << entropie + (double)tree_store.size() << endl;
+  }
+}

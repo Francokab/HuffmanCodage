@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include <queue>
+#include <math.h> 
 
 #include "bitvector.h"
 #include "tree.h"
@@ -92,6 +93,16 @@ void read_dict(map<char, int> dict) {
 
 void read_dict(map<BitVector, int> dict) {
   map<BitVector, int>::iterator i;
+  cout << "Keys"
+       << "  &  "
+       << "Value" << endl;
+  for (i = dict.begin(); i != dict.end(); i++) {
+    cout << (*i).first << "    " << (*i).second << "\n";
+  }
+}
+
+void read_dict(map<BitVector, double> dict) {
+  map<BitVector, double>::iterator i;
   cout << "Keys"
        << "  &  "
        << "Value" << endl;
@@ -261,3 +272,57 @@ BitVector decompress_text_static(BitVector textCompressBitv, Btree btree) {
   return outbitv;
 }
 
+map<BitVector, double> dict_to_entropie(map<BitVector, int> dict) {
+  map<BitVector, double> entropie_dict;
+
+  int sum = 0;
+  double proba = 0.0;
+  double entropieTotal = 0.0;
+  map<BitVector, int>::iterator i;
+  for (i = dict.begin(); i != dict.end(); i++) {
+    sum = sum + (*i).second;
+  }
+  for (i = dict.begin(); i != dict.end(); i++) {
+    proba = (double)(*i).second/sum;
+    entropie_dict[(*i).first] = -log(proba)/log(2);
+    entropieTotal = entropieTotal - proba*log(proba)/log(2);
+  }
+
+  return entropie_dict;
+}
+
+double calculate_entropie(const BitVector fullText, map<BitVector, int> dict, int n) {
+
+  double EntropieTotale = 0.0;
+  map<BitVector, double> entropie_dict = dict_to_entropie(dict);
+  for (unsigned int i = 0; i < fullText.size(); i = i + n) {
+    BitVector v;
+    if (i + n <= fullText.size()) {
+      v = fullText.sliceSE(i, i + n);
+    } else {
+      v = fullText.sliceS(i) + BitVector(i + n - fullText.size());
+    }
+    EntropieTotale = EntropieTotale + entropie_dict[v];
+  }
+
+  return EntropieTotale;
+
+}
+
+void fill_bitvector_tree_storage(BitVector * _bitv, Btree * btree) {
+  if (btree->bitv == BitVector()) {
+    _bitv->push_back(false);
+    fill_bitvector_tree_storage(_bitv, btree->left);
+    fill_bitvector_tree_storage(_bitv, btree->right);
+  }
+  else {
+    _bitv->push_back(true);
+    *_bitv += btree->bitv;
+  }
+}
+
+BitVector calculate_tree_storage(Btree btree) {
+  BitVector tree_store;
+  fill_bitvector_tree_storage(&tree_store, &btree);
+  return tree_store;
+}

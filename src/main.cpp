@@ -14,21 +14,21 @@ using namespace std;
 
 int main() {
 
-  BitVector bitData = read_file_bit("text/text.txt"); //O(n)
+  entropie_test();
+  
+  // Btree tree = *dict_to_tree(dict_bit); //O(c.log(c))
 
-  map<BitVector, int> dict_bit = count_frequency_bit(bitData, 8); //O(n)
+  // BitVector bitDataCompress = compress_text_static(bitData,tree);
 
-  Btree tree = *dict_to_tree(dict_bit); //O(c.log(c))
+  // cout << "size compress : " << bitDataCompress.size() << endl;
 
-  BitVector bitDataCompress = compress_text_static(bitData,tree);
+  // ofstream fluxcomp("text/text_comp.txt");
+  // fluxcomp << bit_to_string(bitDataCompress);
 
-  ofstream fluxcomp("text/text_comp.txt");
-  fluxcomp << bit_to_string(bitDataCompress);
+  // BitVector bitDataDecompress = decompress_text_static(bitDataCompress, tree);
 
-  BitVector bitDataDecompress = decompress_text_static(bitDataCompress, tree);
-
-  ofstream fluxdecomp("text/text_decomp.txt");
-  fluxdecomp << bit_to_string(bitDataDecompress);
+  // ofstream fluxdecomp("text/text_decomp.txt");
+  // fluxdecomp << bit_to_string(bitDataDecompress);
 
   return 0;
 }

@@ -11,3 +11,4 @@
 
 void mainTest(string path);
 void compressbit_test();
+void entropie_test();
